@@ -11,9 +11,9 @@ import Foundation
 class User {
     
     var name: String
-    
+    var profilePic: String
     init(dictionary: [String: Any]) {
         name = dictionary["name"] as! String
-
+        profilePic = (dictionary["profile_image_url_https"] as? String)!
     }
 }
