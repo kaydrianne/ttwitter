@@ -9,9 +9,21 @@
 import UIKit
 
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    func did(post: Tweet) {
+        APIManager.shared.getHomeTimeLine { (tweets, error) in
+            if let tweets = tweets {
+                self.tweets = tweets
+                self.tableView.reloadData()
+            } else if let error = error {
+                print("Error getting home timeline: " + error.localizedDescription)
+            }
+        }
+    }
+    
     
     var tweets: [Tweet] = []
-    
+   
+
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -64,6 +76,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetail" {
+            let cell = sender as! UITableViewCell
+            let indexpath = tableView.indexPath(for: cell)
+            let tweet = tweets[(indexpath?.row)!]
+            let detailVC = segue.destination as! DetailTweetViewController
+            detailVC.tweets = tweet
+            
+            
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

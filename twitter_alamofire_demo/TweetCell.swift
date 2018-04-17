@@ -21,8 +21,7 @@ class TweetCell: UITableViewCell {
             tweetTextLabel.text = tweet.text
             usernameLabel.text = tweet.user.name
             
-            let profileUrl = URL(string: tweet.user.profilePic)
-            profileImageView.af_setImage(withURL: profileUrl!)
+            profileImageView.af_setImage(withURL: tweet.user.profileImageUrl!)
             
         }
     }
